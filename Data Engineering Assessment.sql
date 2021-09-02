@@ -36,6 +36,26 @@ join marketing_orders mo on o.id = mo.order_id
 join marketing m on mo.marketing_id = m.id
 order by o.id;
 
+/*2.	Using the tables above, write a query that returns the best performing marketing ad network and source, a count of how many orders it had, and the best selling product for that ad network and source. Also include the output of the query.
+Hint: The best selling product will have to be retrieved through seeing which orders are associated with the best performing marketing ad network and source. In this case, best performing means “Has the largest number of records in the DB associated with it”. This result will be a single row.
+*/
+select m.ad_network, m.source, count(o.id), p.name
+from orders o
+join marketing_orders mo on o.id = mo.order_id
+join marketing m on mo.marketing_id = m.id
+join product p on o.product_id = p.id
+group by m.ad_network, m.source
+order by count(o.id) desc;
+
+/*3.	Write a query that determines the best selling product for each month of orders. Also include the output of the query.*/
+select p.name, count(o.id)
+from orders o
+join product p on o.product_id = p.id
+group by p.name
+order by count(o.id) desc;
+
+
+
 
 
 
