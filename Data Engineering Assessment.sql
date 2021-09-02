@@ -28,4 +28,12 @@ INSERT INTO marketing_orders values(4,1);
 INSERT INTO marketing_orders values(5,1);
 
 
+/*1.	Using the tables above, write a query that returns, for each order, the order_id, the product name, the difference in days between the product go live date and the ordered at date, and the marketing ad network and source. This result should be five rows. Also include the output of the query. */
+select o.id, p.name, datediff(p.go_live_date, o.ordered_at), m.ad_network, m.source
+from orders o
+join product p on o.product_id = p.id
+join marketing_orders mo on o.id = mo.order_id
+join marketing m on mo.marketing_id = m.id
+order by o.id;
+
 
