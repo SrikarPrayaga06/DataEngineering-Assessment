@@ -13,13 +13,13 @@ def csv_to_json(csv_file):
 
 
 # export json to desktop
-json_export=csv_to_json("/Users/srikarprayaga/Desktop/orders.csv")
+json_export=csv_to_json("/Users/srikarprayaga/Desktop/DataEngineering-Assessment/orders.csv")
 with open("/Users/srikarprayaga/Desktop/test.json", "w") as json_file:
     json.dump(json_export, json_file)
 
 # just test if csv to json works locally 
-json_export=csv_to_json("/Users/srikarprayaga/Desktop/orders.csv")
-json_ex=csv_to_json("/Users/srikarprayaga/Desktop/test.csv")
+json_export=csv_to_json("/Users/srikarprayaga/Desktop/DataEngineering-Assessment/orders.csv")
+json_ex=csv_to_json("/Users/srikarprayaga/Desktop/DataEngineering-Assessment/test.csv")
 
 
 ###############################################################################
@@ -42,7 +42,7 @@ def yaml_to_csv(yaml_file):
     with open(yaml_file, 'r') as yaml_file:
         yaml_data=yaml.load(yaml_file)
         csv_data=pd.DataFrame(yaml_data)
-        return csv_data.to_csv('/Users/srikarprayaga/Desktop/tester.csv',index=False)
+        return csv_data.to_csv('/Users/srikarprayaga/Desktop/yaml_tester.csv',index=False)
 # convert json to yaml
 def json_to_yaml(json_file):
     with open(json_file, 'r') as json_file:
