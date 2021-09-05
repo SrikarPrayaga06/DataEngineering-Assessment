@@ -1,37 +1,59 @@
-#4.	Write python code that can take csv and convert it into an array of json OR take an array of JSON and convert it into a CSV file with the same column names. This code should be able to write to a file in either CSV or JSON format, the user should be able to pick the output type. If someone picks the same output type as the input type it should write out that file still.
-# csv contains columns id, name, description, commas_used, created_at, updated_at
+# imports
 import csv
 import json
-csv_file = '/Users/srikarprayaga/Desktop/orders.csv'
+import pandas as pd
+import yaml
+
+# function to convert csv to json
 def csv_to_json(csv_file):
-    with open(csv_file, 'r') as f:
-        reader = csv.reader(f)
-        columns = next(reader)
-        json_data = []
-        for row in reader:
-            json_data.append(dict(zip(columns, row)))
-    return json_data
+    with open(csv_file, 'r',encoding='utf-8-sig') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        json_file = json.dumps([row for row in csv_reader])
+        return json_file
+
+
+# export json to desktop
+json_export=csv_to_json("/Users/srikarprayaga/Desktop/orders.csv")
+with open("/Users/srikarprayaga/Desktop/test.json", "w") as json_file:
+    json.dump(json_export, json_file)
+
+# just test if csv to json works locally 
+json_export=csv_to_json("/Users/srikarprayaga/Desktop/orders.csv")
+json_ex=csv_to_json("/Users/srikarprayaga/Desktop/test.csv")
+
+
+###############################################################################
+# convert json to csv
 def json_to_csv(json_file):
-    with open(json_file, 'r') as f:
-        reader = csv.reader(f)
-        columns = next(reader)
-        csv_data = []
-        for row in reader:
-            csv_data.append(dict(zip(columns, row)))
-    return csv_data
-# export csv to json 
-json_data = csv_to_json(csv_file)
-json_file = '/Users/srikarprayaga/Desktop/orders.json'
-with open(json_file, 'w') as f:
-    json.dump(json_data, f)
-# export json to csv
-columns = ['id', 'name', 'description', 'commas_used', 'created_at', 'updated_at']
-csv_file = '/Users/srikarprayaga/Desktop/orders.csv'
-csv_data = json_to_csv(json_file)
-with open(csv_file, 'w') as f:
-    writer = csv.writer(f)
-    writer.writerow(columns)
-    for row in csv_data:
-        writer.writerow(row.values())
+    xda=pd.read_json(json_file)
+    return xda.to_csv('/Users/srikarprayaga/Desktop/tester.csv',index=False)
+json_to_csv(json_ex)
+
+###############################################################################
+
+# convert from yaml to json 
+def yaml_json(yaml_file):
+    with open(yaml_file, 'r') as yaml_file:
+        yaml_data=yaml.load(yaml_file)
+        json_data=json.dumps(yaml_data)
+        return json_data
+# convert yaml to csv
+def yaml_to_csv(yaml_file):
+    with open(yaml_file, 'r') as yaml_file:
+        yaml_data=yaml.load(yaml_file)
+        csv_data=pd.DataFrame(yaml_data)
+        return csv_data.to_csv('/Users/srikarprayaga/Desktop/tester.csv',index=False)
+# convert json to yaml
+def json_to_yaml(json_file):
+    with open(json_file, 'r') as json_file:
+        json_data=json.load(json_file)
+        yaml_data=yaml.dump(json_data)
+        return yaml_data
+# convert csv to yaml
+def csv_to_yaml(csv_file):
+    with open(csv_file, 'r') as csv_file:
+        csv_data=pd.read_csv(csv_file)
+        yaml_data=yaml.dump(csv_data)
+        return yaml_data
 
 
