@@ -28,31 +28,41 @@ INSERT INTO marketing_orders values(4,1);
 INSERT INTO marketing_orders values(5,1);
 
 
-/*1.	Using the tables above, write a query that returns, for each order, the order_id, the product name, the difference in days between the product go live date and the ordered at date, and the marketing ad network and source. This result should be five rows. Also include the output of the query. */
-select o.id, p.name, datediff(p.go_live_date, o.ordered_at), m.ad_network, m.source
-from orders o
-join product p on o.product_id = p.id
-join marketing_orders mo on o.id = mo.order_id
-join marketing m on mo.marketing_id = m.id
-order by o.id;
-
-/*2.	Using the tables above, write a query that returns the best performing marketing ad network and source, a count of how many orders it had, and the best selling product for that ad network and source. Also include the output of the query.
-Hint: The best selling product will have to be retrieved through seeing which orders are associated with the best performing marketing ad network and source. In this case, best performing means “Has the largest number of records in the DB associated with it”. This result will be a single row.
+--1
+select o.id, p.name, p.go_live_date, o.ordered_at as diff, m.ad_network, m.source from orders o 
+join product p on o.product_id = p.id join marketing_orders mo on o.id = mo.order_id join marketing m on mo.marketing_id = m.id;
+/* resulting table
+id          name        diff        ad_network  source    
+----------  ----------  ----------  ----------  ----------
+1           Pillow      0           facebook    ads       
+2           Mattress    0           facebook    ads       
+3           Comforter   0           facebook    remarketin
+4           Mattress    0           facebook    ads       
+5           Mattress    0           facebook    ads   
 */
-select m.ad_network, m.source, count(o.id), p.name
-from orders o
-join marketing_orders mo on o.id = mo.order_id
-join marketing m on mo.marketing_id = m.id
-join product p on o.product_id = p.id
-group by m.ad_network, m.source
-order by count(o.id) desc;
 
-/*3.	Write a query that determines the best selling product for each month of orders. Also include the output of the query.*/
-select p.name, count(o.id)
-from orders o
-join product p on o.product_id = p.id
-group by p.name
-order by count(o.id) desc;
+
+--2
+select m.ad_network, m.source, count(o.id) as count, p.name from orders o join marketing_orders mo on o.id = mo.order_id join marketing m on mo.marketing_id = m.id 
+join product p on o.product_id = p.id group by m.ad_network, m.source order by count desc limit 1;
+/* resulting table
+ad_network  source      count       name      
+----------  ----------  ----------  ----------
+facebook    ads         4           Mattress  
+*/
+
+
+
+--3
+select strftime('%m', o.ordered_at) as month, p.name, sum(o.product_quantity) as sum from orders o join product p on o.product_id = p.id group by month, p.name order by sum desc limit 2;
+/* resulting table
+month       name        sum       
+----------  ----------  ----------
+02          Mattress    5         
+01          Mattress    4 
+*/
+
+
 
 
 
