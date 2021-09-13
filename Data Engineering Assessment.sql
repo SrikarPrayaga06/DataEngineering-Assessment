@@ -29,16 +29,16 @@ INSERT INTO marketing_orders values(5,2);
 
 
 --1
-select o.id, p.name, JulianDay(p.go_live_date) - JulianDay(o.ordered_at) as diff, m.ad_network, m.source from orders o 
+select o.id, p.name, (strftime('%s',o.ordered_at) - strftime('%s', p.go_live_date))/86400.0 as diff, m.ad_network, m.source from orders o 
 join product p on o.product_id = p.id join marketing_orders mo on o.id = mo.order_id join marketing m on mo.marketing_id = m.id;
 /* resulting table
 id          name        diff        ad_network  source    
 ----------  ----------  ----------  ----------  ----------
-1           Pillow      0           facebook    ads       
-2           Mattress    0           facebook    ads       
-3           Comforter   0           facebook    remarketing
-4           Mattress    0           facebook    ads       
-5           Mattress    0           facebook    remarketing   
+1           Pillow      0.0           facebook    ads       
+2           Mattress    2.20841435    facebook    ads       
+3           Comforter   4.50347222    facebook    remarketing
+4           Mattress    31.125        facebook    ads       
+5           Mattress    35.0          facebook    remarketing   
 */
 
 
