@@ -29,7 +29,7 @@ INSERT INTO marketing_orders values(5,1);
 
 
 --1
-select o.id, p.name, p.go_live_date, o.ordered_at as diff, m.ad_network, m.source from orders o 
+select o.id, p.name, p.go_live_date - o.ordered_at as diff, m.ad_network, m.source from orders o 
 join product p on o.product_id = p.id join marketing_orders mo on o.id = mo.order_id join marketing m on mo.marketing_id = m.id;
 /* resulting table
 id          name        diff        ad_network  source    
