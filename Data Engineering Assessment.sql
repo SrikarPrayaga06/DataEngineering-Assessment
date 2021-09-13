@@ -36,7 +36,7 @@ id          name        diff        ad_network  source
 ----------  ----------  ----------  ----------  ----------
 1           Pillow      0           facebook    ads       
 2           Mattress    0           facebook    ads       
-3           Comforter   0           facebook    remarketin
+3           Comforter   0           facebook    remarketing
 4           Mattress    0           facebook    ads       
 5           Mattress    0           facebook    ads   
 */
