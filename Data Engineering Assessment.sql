@@ -48,7 +48,7 @@ join product p on o.product_id = p.id group by m.ad_network, m.source order by c
 /* resulting table
 ad_network  source      count       name      
 ----------  ----------  ----------  ----------
-facebook    ads         4           Mattress  
+facebook    ads         3           Mattress  
 */
 
 
