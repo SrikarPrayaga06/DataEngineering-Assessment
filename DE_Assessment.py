@@ -6,9 +6,9 @@ import yaml
 
 # function to convert csv to json
 def csv_to_json(csv_file):
-    with open(csv_file, 'r',encoding='utf-8-sig') as csv_file:
-        csv_reader = csv.DictReader(csv_file)
-        json_file = json.dumps([row for row in csv_reader])
+    with open(csv_file, 'r',encoding='utf-8-sig') as csv_file: # to remove \ufeff\
+        csv_reader = csv.DictReader(csv_file) #reads in as dict
+        json_file = json.dumps([row for row in csv_reader]) # create key val pairs
         return json_file
 
 
