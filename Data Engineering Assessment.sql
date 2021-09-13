@@ -57,10 +57,11 @@ facebook    ads         3           Mattress
 select month,name,max(sum) from (select strftime('%m', o.ordered_at) as 
 month, p.name, sum(o.product_quantity) as sum from orders o join product p on o.product_id = p.id group by month, 
 p.name order by sum desc) group by month;
-month       name        sum       
+/* resulting table
+month       name        max(sum)  
 ----------  ----------  ----------
+01          Mattress    4         
 02          Mattress    5         
-01          Mattress    4 
 */
 
 
